@@ -21,7 +21,7 @@ ESP32Led::~ESP32Led() {
 	rmt_driver_uninstall(_config.channel);
 
 	delete[] _led_data_buffer;
-	_rmt_channel &= (1<<_my_rmt_channel_no); // release the cannel
+	_rmt_channel &= (1<<_my_rmt_channel_no); // release the channel
 
 	gpio_set_direction(_config.gpio_num, GPIO_MODE_INPUT);
 }

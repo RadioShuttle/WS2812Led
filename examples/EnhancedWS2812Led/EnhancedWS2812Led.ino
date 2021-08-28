@@ -3,10 +3,13 @@
 #include "WS2812Led.h"
 
 
+
 #if defined(ARDUINO_ESP32S2_DEV)
 static const uint8_t WS2812LedPin = 18;
 #elif defined(ARDUINO_ESP32C3_DEV)
 static const uint8_t WS2812LedPin  = 8;
+#elif defined(ARDUINO_ESP32_DEV)
+static const uint8_t WS2812LedPin  = 4;
 #else
  #error "unknown board/pin"
 #endif
@@ -17,14 +20,13 @@ void setup() {
   Serial.begin(115200);
   delay(100); // allow to flush boot messages
 
-  Serial.printf("WS2812Led start: %%d LED's\n", wsLED.NumberOfLeds()); 
+  Serial.printf("WS2812Led start: %d LED's\n", wsLED.NumberOfLeds()); 
 
   wsLED.Brightness(32);
    
   wsLED.UpdateAll(10, 0, 0);
   delay(1000);
   wsLED.Clear();
-  wsLED.Brightness(32);
 
   for (int i = 0; i < wsLED.NumberOfLeds(); i++) {
     switch(i % 10) {
@@ -68,11 +70,10 @@ void setup() {
   delay(3000);
   
 
-  Serial.print("WS2812Led continue\n");
+  Serial.print("WS2812Led continue with rotate\n");
 }
 
 void loop() {
   wsLED.Rotate();
-  delay(400);
-  printf("loop\n");
+  delay(300);
 }
