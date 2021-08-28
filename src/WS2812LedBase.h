@@ -97,6 +97,14 @@ public:
   	 * Update the entire LED stripe
 	 */
 	void UpdateAll(RGBColors color, bool show = true);
+	
+	/*
+	 * rotates/rools the LED stripe to the right or left
+	 * The number of steps (LEDs) can be specified via the count
+	 * Default is the direction forward which means Led1 becomes Led2, etc.
+	 * the last LED becomes the first LED.
+	 */
+	void Rotate(int steps = 1, bool directionForward = true, bool show = true);
   
 	/*
 	 * Clears all LEDs by setting the color to zero
@@ -117,6 +125,16 @@ public:
 	 * Example: Brightness(128) // set the brightness 50%
 	 */
 	void Brightness(uint8_t brightness);
+	
+	/*
+	 * Gets the LED color type, at present LED_RGB or LED_RGBW
+	 */
+	int LedColorType(void);
+	
+	/*
+	 * gets the number of configured LEDs (defined in the Constructor))
+	 */
+	int NumberOfLeds(void);
   
   protected:
 	bool _initDone;
@@ -127,6 +145,8 @@ public:
 	LedColorModel _bytesPerColor;
 	uint8_t *_ledValues;
 	bool _clearLedsOnExit = true;
+
+	void _DumpLedBuffer(void);
 
 	/*
 	 * Here are the timing values according to the WS2812B datahseet for a single bit
