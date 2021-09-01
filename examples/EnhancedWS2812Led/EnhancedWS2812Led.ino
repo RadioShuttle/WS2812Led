@@ -4,7 +4,7 @@
 
 
 
-#if defined(ARDUINO_ESP32S2_DEV)
+#if defined(ARDUINO_ESP32S2_DEV) || defined(ARDUINO_ESP32S2_USB)
 static const uint8_t WS2812LedPin = 18;
 #elif defined(ARDUINO_ESP32C3_DEV)
 static const uint8_t WS2812LedPin  = 8;
@@ -76,4 +76,5 @@ void setup() {
 void loop() {
   wsLED.Rotate();
   delay(300);
+  Serial.printf("Rotate Leds\n");
 }
