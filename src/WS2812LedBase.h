@@ -159,11 +159,11 @@ public:
 	 * Signal of _T1H_SEC +_T1H_SEC represents one ON bit
 	 * See const float in WS2812LedBase.cpp
 	 */
-    static const float _T0H_SEC;
-    static const float _T0L_SEC;
-    static const float _T1H_SEC;
-    static const float _T1L_SEC;
-    static const float _TRST_SEC;
+	static const float _T0H_SEC;
+	static const float _T0L_SEC;
+	static const float _T1H_SEC;
+	static const float _T1L_SEC;
+	static const float _TRST_SEC;
 };
 
 #endif // __WS2812LEDBASE_H__
