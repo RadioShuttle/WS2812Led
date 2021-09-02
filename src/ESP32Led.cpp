@@ -36,7 +36,7 @@ ESP32Led::Init() {
 	pinMode(_pin, OUTPUT);
 	/*
 	 * find the next available rmt channel
-	 * rge ESP32 has 8, the ESP32-S2 has only 4 channels.
+	 * the ESP32 has 8, the ESP32-C3 has only 4 channels.
 	 */
 	_my_rmt_channel_no = -1;
 	for (int i = 0; i < RMT_CHANNEL_MAX; i++) {
@@ -52,24 +52,24 @@ ESP32Led::Init() {
 	}
 	ESP_ERROR_CHECK(_my_rmt_channel_no < 0);
 
-    rmt_config_t newconfig = RMT_DEFAULT_CONFIG_TX((gpio_num_t)_pin, (rmt_channel_t)_my_rmt_channel_no);
-    newconfig.clk_div = 2;
-    memcpy(&_config, &newconfig, sizeof(_config));
+	rmt_config_t newconfig = RMT_DEFAULT_CONFIG_TX((gpio_num_t)_pin, (rmt_channel_t)_my_rmt_channel_no);
+	newconfig.clk_div = 2;
+	memcpy(&_config, &newconfig, sizeof(_config));
 
-    ESP_ERROR_CHECK(rmt_config(&_config));
-    ESP_ERROR_CHECK(rmt_driver_install(_config.channel, 0, 0));
+	ESP_ERROR_CHECK(rmt_config(&_config));
+	ESP_ERROR_CHECK(rmt_driver_install(_config.channel, 0, 0));
 
-    _led_data_buffer = new rmt_item32_t[(_numLEDs * (_bytesPerColor * 8))+1]; // count * bits per led + 1 reset code
+	_led_data_buffer = new rmt_item32_t[(_numLEDs * (_bytesPerColor * 8))+1]; // count * bits per led + 1 reset code
 
-    uint32_t clock = 0; // usually 40 MHz, half of AHB
-    rmt_get_counter_clock(_config.channel, &clock);
-    float cyles = 1.0/(float)clock;
+	uint32_t clock = 0; // usually 40 MHz, half of AHB
+	rmt_get_counter_clock(_config.channel, &clock);
+	float cyles = 1.0/(float)clock;
 
-    _T0H = (_T0H_SEC / cyles) + 0.5; // see timings in WS2812LedBase.cpp
-    _T0L = (_T0L_SEC / cyles) + 0.5;
-    _T1H = (_T1H_SEC / cyles) + 0.5;
-    _T1L = (_T1L_SEC / cyles) + 0.5;
-    /*
+	_T0H = (_T0H_SEC / cyles) + 0.5; // see timings in WS2812LedBase.cpp
+	_T0L = (_T0L_SEC / cyles) + 0.5;
+	_T1H = (_T1H_SEC / cyles) + 0.5;
+	_T1L = (_T1L_SEC / cyles) + 0.5;
+	/*
 	 * the program delay/overhead between two Show()'s is significant
 	 * therefore we subtract this delay from the RST period to
 	 * allow the fasted updates within the WS2812B spec
@@ -79,16 +79,16 @@ ESP32Led::Init() {
 	ESP_RMT_START_DELAY = 0.000022;
 #endif
 	if (_TRST_SEC > ESP_RMT_START_DELAY)
-	    _TRST = ((_TRST_SEC-ESP_RMT_START_DELAY) / cyles) + 0.5;
-    else
+		_TRST = ((_TRST_SEC-ESP_RMT_START_DELAY) / cyles) + 0.5;
+	else
 		_TRST = (_TRST_SEC / cyles) + 0.5;
-    if (_debug) {
+	if (_debug) {
 		Serial.printf("_T0H: %d, _T0L: %d\n", _T0H, _T0L);
 		Serial.printf("_T1H: %d, _T1L: %d\n", _T1H, _T1L);
 		Serial.printf("_TRST: %d\n", _TRST);
-    }
-    delayMicroseconds(((1.0/_TRST_SEC)/1000)); // force the stripe to turn into reset (50µsec)
-    _initDone = true;
+	}
+	delayMicroseconds(((1.0/_TRST_SEC)/1000)); // force the stripe to turn into reset (50µsec)
+	_initDone = true;
 }
 
 void
@@ -100,7 +100,7 @@ ESP32Led::Show(void)
     ESP_ERROR_CHECK(rmt_wait_tx_done(_config.channel, portMAX_DELAY)); // wait for pending LED TX request
 
      /*
-      * convert the RGB color (24 bits) into the RMT buffer conisting of
+      * convert the RGB color (24 bits) into the RMT buffer consisting of
       * rmt_item32_t items for each bit, 24 bit (3 x 8) per led
       */
      for (uint32_t ledIndex = 0; ledIndex < _numLEDs; ledIndex++) { // index of current LED
