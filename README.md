@@ -39,6 +39,7 @@ The WS2812B timing has been implemented, verified and optimized to work precisel
 ## TODOs
 - more testing, test the RGBW LEDs
 - test with different MCU frequencies
+- testing with the WS2812B 2020 LEDs, have not seen such versions, or they just work. The 2020 timings are different!
 
 ## License and contributions
 
