@@ -13,36 +13,36 @@
 class WS2812LedBase {
 public:
 	enum LedColorModel {
-		  LED_RGB = 3,		// 3 channels equals 24 bit
-		  LED_RGBW = 4,		// 3 channels equals 32 bit
+		LED_RGB = 3,		// 3 channels equals 24 bit
+		LED_RGBW = 4,		// 3 channels equals 32 bit
 	};
 	/*
-	 * some predefined led colors for easy use of color names.
+	 * some predefined LED colors for easy use of color names.
 	 * See Update()
 	 */
 	enum RGBColors {
-		  RED    = 0xff000000,
-		  GREEN  = 0x00ff0000,
-		  BLUE   = 0x0000ff00,
-		  WHITE  = 0xffffff00,
-		  SILVER = 0xc0c0c000,
-		  GRAY   = 0x80808000,
-		  OLIVE  = 0x80800000,
-		  MAROON = 0x80000000,
-		  YELLOW = 0xffff0000,
-		  AQUA   = 0x00ffff00,
-		  NAVY   = 0x00008000,
-		  FUCHSIA= 0xff00ff00,
-		  PURPLE = 0x80008000,
+		RED    = 0xff000000,
+		GREEN  = 0x00ff0000,
+		BLUE   = 0x0000ff00,
+		WHITE  = 0xffffff00,
+		SILVER = 0xc0c0c000,
+		GRAY   = 0x80808000,
+		OLIVE  = 0x80800000,
+		MAROON = 0x80000000,
+		YELLOW = 0xffff0000,
+		AQUA   = 0x00ffff00,
+		NAVY   = 0x00008000,
+		FUCHSIA= 0xff00ff00,
+		PURPLE = 0x80008000,
 	};
 	
 	/*
-	 * WS2812Led constructor allows to create a WS2812 LED chain instance
+	 * WS2812Led constructor allows creating a WS2812 LED chain instance
 	 * The first parameter is the GPIO pin which drives the WS2812 LEDs
 	 * The second parameter is the RMT channel (up to 8 channels are available on the ESP32)
-	 * e.g.: second LED stripe can be driven by a second channel.
+	 * e.g. second LED stripe can be driven by a second channel.
 	 *
-	 * For the ESP32-S2 the on board LED (gpio no. 18):
+	 * For the ESP32-S2 the on-board LED (gpio no. 18):
 	 * WS2812Led wsLED(18);
 	 * wsLED.Update(wsLED.RED);
 	 */
@@ -53,41 +53,46 @@ public:
 	 */
 	~WS2812LedBase();
 
-  /*
-   * Transfer the set LED colors,from previous Update() calls, to the LED stripe
-   */
-  virtual void Show(void) = 0;
+	/*
+	 * Transfer the set LED colors,from previous Update() calls, to the LED stripe
+	 */
+	virtual void Show(void) = 0;
 
-  /*
-   * The maximum LED stripes (WS2812Led instances) being supported system wide
-   * as updating the LEDs stripes keeps system resources busy during updates
-   * there may be limitations on the number of parallel updates.
-   */
-  virtual int MaxIntances(void) = 0;
+	/*
+	 * Maximum number of LED stripes (WS2812Led instances) supported systemwide:
+	 * Updating the LEDs stripes keeps system resources busy. During updates
+	 * there may be limitations on the number of parallel updates.
+	*/
+	virtual int MaxIntances(void) = 0;
   
-  virtual void Init() = 0;
+  	/*
+  	 * The Init call will be delayed and issued at the first API access
+  	 * after the constructor. The reason for the delay is that in Arduino
+  	 * global variables some libraries not initialized.
+	 */
+ 	virtual void Init() = 0;
 
-   /*
-    * Update allows to set the RGB colors (Red, Green, Blue, White) from 0-255, e.g.:
-    * Update(20, 0, 0)  // for a light red
-    * Update(255, 0, 0) // for a strong red
-    *
-    * By default the first LED is set, otherwise specify LED index e,g:
-    * Update(255, 0, 0, 1); // for LED index 1 equals the second LED
-    *
-    * The fourth parameter specifies if the new color will be shown right away (default),
-    * or set to false to allow multiple Updates() calls for different LEDs
-    * When done, calling Show() will transfer the previouly defined colors to the LEDs
-    */
+	/*
+	 * Update allows setting the RGB colors (Red, Green, Blue, White) from 0-255, e.g.:
+	 * Update(20, 0, 0)  // for a light red
+	 * Update(255, 0, 0) // for a strong red
+	 *
+	 * By default the first LED is set, otherwise specify LED index, e,g:
+	 * Update(255, 0, 0, 1); // for LED index 1 equals the second LED
+	 *
+	 * The fourth parameter specifies if the new color will be shown right away (default),
+	 * or set to false to allow multiple Updates() calls for different LEDs
+	 * When done, calling Show() will transfer the previously defined colors into the LEDs
+	 */
 	void Update(uint8_t red, uint8_t green, uint8_t blue, uint8_t white = 0, int LEDIndex = 0, bool show = true);
 
 	/*
-	 * same as Update(), but for all Leds
+	 * same as Update(), but for all LEDs
 	 */
 	void UpdateAll(uint8_t red, uint8_t green, uint8_t blue, uint8_t white = 0, bool show = true);
 
 	/*
-	 * Update allows to set common named colors, e.g.:
+	 * Update allows to setting named colors, e.g.:
 	 * Update(WS2812Led::NAVY);
 	 * or Update(wsLed.NAVY); for a darker blue
 	 */
@@ -99,9 +104,9 @@ public:
 	void UpdateAll(RGBColors color, bool show = true);
 	
 	/*
-	 * rotates/rools the LED stripe to the right or left
+	 * rotates/rolls the LED stripe to the right or left
 	 * The number of steps (LEDs) can be specified via the count
-	 * Default is the direction forward which means Led1 becomes Led2, etc.
+	 * Default is the direction forward which means LED 1 becomes LED 2, etc.
 	 * the last LED becomes the first LED.
 	 */
 	void Rotate(int steps = 1, bool directionForward = true, bool show = true);
@@ -112,17 +117,17 @@ public:
 	void Clear();
 	
 	/*
-	 * In the destruction of the WS2812Led class the Leds are being turned off.
-	 * For some use cases it can be usfull to keep the LEDs stripe turned on.
+	 * In the destruction of the WS2812Led class the LEDs are turned off.
+	 * For some use cases it can be useful to keep the LEDs stripe turned on.
 	 */
 	void ClearAtExit(bool yesNo);
 	
 	/*
-	 * Brightness allows to set the brightness between 0-255
-	 * full brightness (255) is the default.
-	 * When a stripe is being shown all colors values will be reduced
+	 * Brightness allows setting the brightness between 0-255
+	 * Full brightness (255) is the default.
+	 * When a stripe is shown all color values will be reduced
 	 * according to the brightness
-	 * Example: Brightness(128) // set the brightness 50%
+	 * Example: Brightness(128) // sets the brightness to 50%
 	 */
 	void Brightness(uint8_t brightness);
 	
@@ -132,7 +137,7 @@ public:
 	int LedColorType(void);
 	
 	/*
-	 * gets the number of configured LEDs (defined in the Constructor))
+	 * Gets the number of configured LEDs (defined in the Constructor))
 	 */
 	int NumberOfLeds(void);
   
@@ -149,12 +154,12 @@ public:
 	void _DumpLedBuffer(void);
 
 	/*
-	 * Here are the timing values according to the WS2812B datahseet for a single bit
+	 * Here are the timing values according to the WS2812B datasheet for a single bit:
 	 * Signal of _T0H_SEC +_T0H_SEC represents one OFF bit
 	 * Signal of _T1H_SEC +_T1H_SEC represents one ON bit
-	 * see const float in WS2812LedBase.cpp
+	 * See const float in WS2812LedBase.cpp
 	 */
-	static const float _T0H_SEC;
+    static const float _T0H_SEC;
     static const float _T0L_SEC;
     static const float _T1H_SEC;
     static const float _T1L_SEC;
