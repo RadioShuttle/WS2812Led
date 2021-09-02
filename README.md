@@ -2,22 +2,22 @@
 ![Title image](/docs/WS2812Led-Sample.jpg)
 As more boards are fitted with WS2812 based LEDs, there is a need for a simple and good performing library to drive these on-board LED or multiple LED stripes. The idea is to provide a lightweight and great performing library.
 
-WS2812Led performs well and is clean C++ implementation. It allows being initialized with multiple instances to drive several LED stripes in parallel. Transferring the data to the LEDs is done in the background via the ESP32 built-in RMT controller, which supports up to 8 channels (instances).
+WS2812Led performs well and is a clean C++ implementation. It allows being initialized with multiple instances to drive several LED stripes in parallel. Transferring the data to the LEDs is done in the background via the ESP32 built-in RMT controller, which supports up to 8 channels (instances).
 
 There is a base implementation with common code and an interface for the MCU specific code. At present, the ESP32 series is implemented, support for STM32L4 under Mbed OS is planned.
 
-Example code:
 ![WS2812B Stripe](/docs/WS2012B-Stripe.jpg)
+Example code:
 <pre>
 {
-    WS2812Led wsLED(WS2812LedPin, 1); // a single LED only, any number of LEDs can be specified
+    WS2812Led wsLED(WS2812LedPin, 10); // 10 LEDs on GPIO 8
 	
     wsLED.Update(10, 0, 0); // light red, RGB values 0-255, 
     delay(1000);
     wsLED.Clear();
     wsLED.Brightness(32);
-    wsLED.UpdateAll(wsLED.RED); // add an index parameter at end for a specifiy LED
-    ... // set each LED as required via Update/(..., LEDIndex);
+    wsLED.UpdateAll(wsLED.RED);
+    ... // set each LED as required via Update(..., LEDIndex);
     delay(1000);
     while(true) {
         wsLED.Rotate(); // rotate all LEDs on right
