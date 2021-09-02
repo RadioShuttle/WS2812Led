@@ -104,7 +104,7 @@ public:
 	void UpdateAll(RGBColors color, bool show = true);
 	
 	/*
-	 * rotates/rolls the LED stripe to the right or left
+	 * Rotates/rolls the LED stripe to the right or left
 	 * The number of steps (LEDs) can be specified via the count
 	 * Default is the direction forward which means LED 1 becomes LED 2, etc.
 	 * the last LED becomes the first LED.

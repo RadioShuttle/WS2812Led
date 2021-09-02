@@ -1,5 +1,5 @@
 # WS2812Led – a WS2812B library for the ESP32
-![Title image](/docs/WS2812Led-Sample.png)
+[Title image](/docs/WS2812Led-Sample.jpg)
 As more boards are fitted with WS2812 based LEDs, there is a need for a simple and good performing library to drive these on-board LED or multiple LED stripes. The idea is to provide a lightweight and great performing library.
 
 WS2812Led performs well and is clean C++ implementation. It allows being initialized with multiple instances to drive several LED stripes in parallel. Transferring the data to the LEDs is done in the background via the ESP32 built-in RMT controller, which supports up to 8 channels (instances).
@@ -7,6 +7,7 @@ WS2812Led performs well and is clean C++ implementation. It allows being initial
 There is a base implementation with common code and an interface for the MCU specific code. At present, the ESP32 series is implemented, support for STM32L4 under Mbed OS is planned.
 
 Example code:
+[WS2812B Stripe](/docs/WS2012B-Stripe.jpg)
 <pre>
 {
     WS2812Led wsLED(WS2812LedPin, 1); // a single LED only, any number of LEDs can be specified
