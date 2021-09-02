@@ -9,18 +9,18 @@ There is a base implementation with common code and an interface for the MCU spe
 Example code:
 <pre>
 {
-	WS2812Led wsLED(WS2812LedPin, 1); // a single LED only, any number of LEDs can be specified
+    WS2812Led wsLED(WS2812LedPin, 1); // a single LED only, any number of LEDs can be specified
 	
-	wsLED.Update(10, 0, 0); // light red, RGB values 0-255, 
-	delay(1000);
-	wsLED.Clear();
-	wsLED.Brightness(32);
-	wsLED.UpdateAll(wsLED.RED); // add an index parameter at end for a specifiy LED
- 	... // set each LED as required via Update/(color, ..., LEDIndex)
-	delay(1000);
-	while(true) {
-		wsLED.Rotate(); // rotate all LEDs on right
-		delay(300);
+    wsLED.Update(10, 0, 0); // light red, RGB values 0-255, 
+    delay(1000);
+    wsLED.Clear();
+    wsLED.Brightness(32);
+    wsLED.UpdateAll(wsLED.RED); // add an index parameter at end for a specifiy LED
+    ... // set each LED as required via Update/(..., LEDIndex);
+    delay(1000);
+    while(true) {
+        wsLED.Rotate(); // rotate all LEDs on right
+        delay(300);
  }
 </pre>
 
