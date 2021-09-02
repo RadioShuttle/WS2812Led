@@ -70,7 +70,7 @@ public:
   	 * after the constructor. The reason for the delay is that in Arduino
   	 * global variables some libraries not initialized.
 	 */
- 	virtual void Init() = 0;
+ 	virtual void Init(void) = 0;
 
 	/*
 	 * Update allows setting the RGB colors (Red, Green, Blue, White) from 0-255, e.g.:
@@ -114,7 +114,7 @@ public:
 	/*
 	 * Clears all LEDs by setting the color to zero
 	 */
-	void Clear();
+	void Clear(void);
 	
 	/*
 	 * In the destruction of the WS2812Led class the LEDs are turned off.
