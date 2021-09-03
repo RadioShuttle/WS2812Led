@@ -22,7 +22,7 @@ Example code:
     ... // set each LED as required via Update(..., LEDIndex);
     delay(1000);
     while(true) {
-        wsLED.Rotate(); // rotate all LEDs on right
+        wsLED.Rotate(); // rotate all LEDs one right
         delay(300);
  }
 </pre>
