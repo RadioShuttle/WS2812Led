@@ -34,6 +34,10 @@ public:
 		NAVY   = 0x00008000,
 		FUCHSIA= 0xff00ff00,
 		PURPLE = 0x80008000,
+		ORANGE = 0xff8c0000,
+		PINK   = 0xC7158500,
+		WHITE_RGBW = 0x000000ff,
+		
 	};
 	
 	/*

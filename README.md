@@ -52,3 +52,4 @@ The software is provided under the Apache 2.0 license. Contributions to this pro
 - ESP32 RMT (Remote Control Peripherals)  https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/rmt.html
 - Datahseet WS2812B: see documentation [WS2812B](/docs/WS2812B.pdf)
 - Datahseet WS2812B-2020: see documentation [WS2812B-2020](/docs/WS2812B-2020_V10_EN.pdf)
+- LED Strips, what's the difference? WS2811, WS2812B, 2812Eco, WS2813, WS2815, SK6812, SK9822. [LED Strips] (/https://www.youtube.com/watch?v=QnvircC22hU)
