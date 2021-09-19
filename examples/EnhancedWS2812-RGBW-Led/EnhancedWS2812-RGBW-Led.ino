@@ -23,10 +23,39 @@ void setup() {
   Serial.printf("WS2812Led start: %d LED's\n", wsLED.NumberOfLeds()); 
 
   wsLED.Brightness(32);
-   
-  wsLED.UpdateAll(10, 0, 0);
+  wsLED.UpdateAll(10, 10, 10);
   delay(1000);
+
+  for (int round = 0; round <= 3; round++) {
+
+    switch(round) {
+    case 0:
+      wsLED.UpdateAll(wsLED.RED);
+      break;
+    case 1:
+      wsLED.UpdateAll(wsLED.GREEN);
+      break;
+    case 2:
+      wsLED.UpdateAll(wsLED.BLUE);
+      break;
+    case 3:
+       wsLED.UpdateAll(wsLED.WHITE_RGBW);
+       break;
+    default:
+      break;
+    }
+    
+    for (int brightness = 1; brightness <= 129; brightness += 8) {
+       wsLED.Brightness(brightness-1);
+       wsLED.Show();
+       Serial.printf("brightness: %d\n", brightness-1);
+       delay(500);
+    }
+  }
+
+  
   wsLED.Clear();
+  wsLED.Brightness(32);
 
   for (int i = 0; i < wsLED.NumberOfLeds(); i++) {
     switch(i % wsLED.NumberOfLeds()) {
@@ -49,7 +78,7 @@ void setup() {
       wsLED.Update(wsLED.FUCHSIA, i, false);
       break;
     case 6:
-      wsLED.Update(wsLED.GRAY, i, false);
+      wsLED.Update(wsLED.GRAY_RGBW, i, false);
       break;
     case 7:
       wsLED.Update(wsLED.PURPLE, i, false);
@@ -64,34 +93,25 @@ void setup() {
       wsLED.Update(wsLED.WHITE_RGBW, i, false);
       break;
     case 11:
-      wsLED.Update(wsLED.ORANGE, i, false);
+      wsLED.Update(wsLED.PINK, i, false);
       break;
     case 12:
-      wsLED.Update(wsLED.PINK, i, false);
+      wsLED.Update(wsLED.SKYBLUE, i, false);
       break;
     case 13:
-      wsLED.Update(wsLED.PINK, i, false);
+      wsLED.Update(wsLED.SKYBLUE2, i, false);
       break;
     case 14:
-      wsLED.Update(wsLED.OLIVE, i, false);
+      wsLED.Update(wsLED.TURQUOISE, i, false);
       break;
     case 15:
-      wsLED.Update(wsLED.OLIVE, i, false);
+      wsLED.Update(wsLED.BLACK, i, false);
       break;
     case 16:
-      wsLED.Update(wsLED.OLIVE, i, false);
+      wsLED.Update(wsLED.BLACK, i, false);
       break;   
-    case 17:
-      wsLED.Update(wsLED.OLIVE, i, false);
-      break;   
-    case 18:
-      wsLED.Update(wsLED.OLIVE, i, false);
-      break;   
-    case 19:
-      wsLED.Update(wsLED.OLIVE, i, false);
-      break;      
     default:
-      wsLED.Update(wsLED.WHITE, i, false);
+      wsLED.Update(wsLED.BLACK, i, false);
       break;
    }
   }
